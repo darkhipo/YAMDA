@@ -3,6 +3,7 @@
 Script for erasing annoying sequences from FASTA files.
 Use `erase_annoying_sequences.py -h` to see an auto-generated description of advanced options.
 """
+import pyximport; pyximport.install() #### XXX: Legit?
 
 import argparse
 from yamda.sequences import load_fasta_sequences, save_fasta, erase_subsequences

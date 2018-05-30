@@ -1,3 +1,4 @@
+import pyximport; pyximport.install() #### XXX: Legit?
 import numpy as np
 from tqdm import trange
 from .sequences import get_rc

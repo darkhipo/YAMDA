@@ -3,7 +3,6 @@
 Script for training model.
 Use `run_em.py -h` to see an auto-generated description of advanced options.
 """
-
 import argparse
 
 import numpy as np

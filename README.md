@@ -1,4 +1,4 @@
-<p align="center">
+p align="center">
 <img src="https://github.com/daquang/YAMDA/raw/master/logo/logo.jpg" width="300">
 </p>
 <!---
@@ -129,7 +129,7 @@ cd /tmp && wget https://repo.anaconda.com/archive/Anaconda3-5.1.0-Linux-x86_64.s
 
 #### Install Detailed
 ```bash
-conda update -yn base conda && conda update -y --prefix $HOME/anaconda3 anaconda && conda create -fmy -c defaults -c anaconda -c conda-forge -c bioconda -c pytorch -n YAMDA-env python=3.6.5 numpy=1.13.3 scipy=0.19.1 pyfaidx tqdm pytorch torchvision meme anaconda biopython pybedtools && source activate YAMDA-env;
+conda update -yn base conda && conda update -y --prefix /opt/anaconda3 anaconda && conda create -fmy -c defaults -c anaconda -c conda-forge -c bioconda -c pytorch -n YAMDA-env python=3.6.5 numpy=1.13.3 scipy=0.19.1 anaconda pyfaidx tqdm pytorch torchvision meme anaconda biopython pybedtools libiconv cython && source activate YAMDA-env;
 ```
 
 #### Install Easy
@@ -173,10 +173,7 @@ typically accomplished by first generating a masked genome where all repetitive 
 capital N's. The following command lines will download masked hg19 chromosome FASTA files, assemble the individual 
 files into a single FASTA file (hg19.fa.masked), and remove all intermediate files:
 ```
-wget http://hgdownload.cse.ucsc.edu/goldenpath/hg19/bigZips/chromFaMasked.tar.gz
-tar zxvf chromFaMasked.tar.gz
-cat chr*.fa.masked >> hg19.fa.masked
-rm chr*.fa.masked chromFaMasked.tar.gz
+wget http://hgdownload.cse.ucsc.edu/goldenpath/hg19/bigZips/chromFaMasked.tar.gz && tar zxvf chromFaMasked.tar.gz && cat chr*.fa.masked >> hg19.fa.masked && rm chr*.fa.masked chromFaMasked.tar.gz;
 ```
 ### Extracting BED interval FASTA sequences
 BEDTools' fastaFromBed utility is useful for extracting letter sequences from a reference fasta file based on feature 
@@ -221,8 +218,7 @@ CCCGCCC/GGGCGGG:
 
 
 ```
-python erase_annoying_sequences.py -i Examples/K562_DNase.fa -o Examples/K562_DNase_eraseannoying.fa
-fasta-shuffle-letters -kmer 2 -dna -seed 0 Examples/K562_DNase_eraseannoying.fa Examples/K562_DNase_eraseannoying_shuffled.fa
+python erase_annoying_sequences.py -i Examples/K562_DNase.fa -o Examples/K562_DNase_eraseannoying.fa && fasta-shuffle-letters -kmer 2 -dna -seed 0 Examples/K562_DNase_eraseannoying.fa Examples/K562_DNase_eraseannoying_shuffled.fa
 ```
 
 Now we can run the YAMDA algorithm on the FASTA file:
