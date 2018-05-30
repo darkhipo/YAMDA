@@ -1,4 +1,4 @@
-p align="center">
+<p align="center">
 <img src="https://github.com/daquang/YAMDA/raw/master/logo/logo.jpg" width="300">
 </p>
 <!---
