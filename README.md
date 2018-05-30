@@ -129,16 +129,19 @@ cd /tmp && wget https://repo.anaconda.com/archive/Anaconda3-5.1.0-Linux-x86_64.s
 
 #### Install Detailed
 ```bash
-conda update -yn base conda && conda update -y --prefix /opt/anaconda3 anaconda && conda create -fmy -c defaults -c anaconda -c conda-forge -c bioconda -c pytorch -n YAMDA-env python=3.6.5 numpy=1.13.3 scipy=0.19.1 anaconda pyfaidx tqdm pytorch torchvision meme anaconda biopython pybedtools libiconv cython && source activate YAMDA-env;
+conda update -yn base conda && conda update -y --prefix /opt/anaconda3 anaconda && conda create --name YAMDA-env -fmy -c defaults -c anaconda -c conda-forge -c bioconda -c pytorch python=3.6.5 numpy=1.13.3 scipy=0.19.1 anaconda pyfaidx tqdm pytorch torchvision meme anaconda biopython pybedtools libiconv cython;
 ```
 
 #### Install Easy
 ```bash
-conda env create -f environment.yml && . activate YAMDA-env;
+conda env create -f environment.yml;
 ```
 
+#### Enter Env
+`conda activate YAMDA-env`
+
 #### Exit Env
-`source deactivate`
+`conda deactivate`
 
 #### Kill Env
 `conda env remove --name YAMDA-env`
@@ -155,7 +158,7 @@ cd /tmp && sudo curl -L https://github.com/docker/compose/releases/download/1.18
 3. Make docker image using the makefile `make yamda-dock`
 4. To have docker run the CMD you put into the Dockerfile `sudo docker run yamda-dock`
 5. To ssh into the image, for debugging and so on: `sudo docker run -it yamda-dock bash`
-6. When in the image don't forget to `source activate YAMDA-env`
+6. When in the image don't forget to `conda activate YAMDA-env`
 7. To kill the image and cleanup docker `make cleanup`
 
 Docker is screwy about importing global variables in your environment, which you'll probably want now or later. So far to do it easily and relatively conveniently you need to enter the variable 4 times in 3 different places, twice in the Dockerfile, once in the .env file, and once in the docker-compose.yml file. I made an example VAR to make it clear how to do that. 
@@ -192,12 +195,12 @@ fasta-shuffle-letters utility from the MEME-suite is useful for this purpose.
 fasta-shuffle-letters -kmer 2 -s 0 Examples/H1_POU5F1_ChIP_HAIB.fa.masked H1_POU5F1_ChIP_HAIB_shuffled.fa.masked
 ```
 
-The run_em.py script executes the motif discovery program on the FASTA pairs. Use `python run_em.py -h` to get a 
+The run_em.pyx script executes the motif discovery program on the FASTA pairs. Use `python run_em.pyx -h` to get a 
 detailed description of the script's arguments. Note that to run this example, you do not necessarily need to run the 
 previous examples because all the necessary files have already been prepackaged with this repository. 
 
 ```
-python run_em.py -r -e -i Examples/H1_POU5F1_ChIP_HAIB.fa.masked -j Examples/H1_POU5F1_ChIP_HAIB_shuffled.fa.masked -oc H1_POU5F1_output 
+python run_em.pyx -r -e -i Examples/H1_POU5F1_ChIP_HAIB.fa.masked -j Examples/H1_POU5F1_ChIP_HAIB_shuffled.fa.masked -oc H1_POU5F1_output 
 ```
 
 The output folder H1_POU5F1_output contains the following files:
@@ -218,12 +221,12 @@ CCCGCCC/GGGCGGG:
 
 
 ```
-python erase_annoying_sequences.py -i Examples/K562_DNase.fa -o Examples/K562_DNase_eraseannoying.fa && fasta-shuffle-letters -kmer 2 -dna -seed 0 Examples/K562_DNase_eraseannoying.fa Examples/K562_DNase_eraseannoying_shuffled.fa
+python erase_annoying_sequences.pyx -i Examples/K562_DNase.fa -o Examples/K562_DNase_eraseannoying.fa && fasta-shuffle-letters -kmer 2 -dna -seed 0 Examples/K562_DNase_eraseannoying.fa Examples/K562_DNase_eraseannoying_shuffled.fa
 ```
 
 Now we can run the YAMDA algorithm on the FASTA file:
 ```
-python run_em.py -f 0.1 -r -e -maxs 20000 -i Examples/K562_DNase_eraseannoying.fa -j Examples/K562_DNase_eraseannoying_shuffled.fa -oc K562_DNase_output
+python run_em.pyx -f 0.1 -r -e -maxs 20000 -i Examples/K562_DNase_eraseannoying.fa -j Examples/K562_DNase_eraseannoying_shuffled.fa -oc K562_DNase_output
 ```
 
 The -f argument is one of the most difficult, yet perhaps most important, arguments. The closest corresponding argument 
