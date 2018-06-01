@@ -124,7 +124,7 @@ conda install -c bioconda pybedtools
 
 #### Anaconda Install
 ```bash
-cd /tmp && wget https://repo.anaconda.com/archive/Anaconda3-5.1.0-Linux-x86_64.sh -O ./anaconda3.sh && bash ./anaconda3.sh -u -b -p /opt/anaconda3 && export PATH="/opt/anaconda3/bin:$PATH" && cd -;
+cd /tmp && wget https://repo.anaconda.com/archive/Anaconda3-5.1.0-Linux-x86_64.sh -O ./anaconda3.sh && sudo mkdir -p /opt/anaconda3 && sudo chown darkhipov:darkhipov /opt/anaconda3 && bash ./anaconda3.sh -u -b -p /opt/anaconda3 && export PATH=/opt/anaconda3/bin:/opt/anaconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/darkhipov/anaconda2/bin && cd -;
 ```
 
 #### Install Detailed
